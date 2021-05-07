@@ -2,7 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Read in data using pandas
-data = pd.read_csv('output.csv', sep=',', decimal='.')
+file = input("Dateiname (xyz.csv): ")
+data = pd.read_csv(f'recorded_data/{file}.csv', sep=',', decimal='.')
 # Rename columns
 # data.columns = ['time', 'x', 'y', 'z', 'absolute']
 
@@ -18,8 +19,8 @@ plt.show()
 """
 
 # Plotting the axes in individual plots
-fig, axs = plt.subplots(3, sharex=True, sharey=False)
-for index, axis in enumerate(['accX', 'accY', 'accZ']):
+fig, axs = plt.subplots(6, sharex=True, sharey=True)
+for index, axis in enumerate(['accX', 'accY', 'accZ', 'gyrX', 'gyrY', 'gyrZ']):
     axs[index].plot(data['time'], data[axis])
     axs[index].set(title=f'{axis}-Axis', xlim=(0, data['time'].max()))
 plt.show()
