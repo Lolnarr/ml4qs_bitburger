@@ -2,6 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Read in data using pandas
+
+import os
+def beep(): os.system('afplay /System/Library/Sounds/Tink.aiff')
+
 file = input("Dateiname (xyz.csv): ")
 data = pd.read_csv(f'recorded_data/{file}.csv', sep=',', decimal='.')
 # Rename columns
