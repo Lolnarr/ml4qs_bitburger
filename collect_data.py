@@ -15,7 +15,7 @@ print(df_lettercount)
 
 duration = int(input("Zeitspanne: ")) * 1000
 
-arduino = serial.Serial(port='/dev/cu.usbmodem142301', baudrate=115200)  # Establish serial connection
+arduino = serial.Serial(port='/dev/cu.usbmodem143201', baudrate=115200)  # Establish serial connection
 for i in range(10):  # Dump old data
     arduino.readline()
     if i == 9:
@@ -78,7 +78,8 @@ while input_letter != "exit".upper():
     file_num = df_lettercount.loc[df_lettercount['letter'] == input_letter, 'count'].values[0]
     print("Count: " + str(file_num+1))
     #Path(f"/recorded_data/{input_letter.capitalize()}").mkdir(parents=True, exist_ok=True)
-    dump_data()
+    # dump_data()
+    time.sleep(2)
     mixer.music.play()
     starttime = arduino.readline().decode('utf-8').replace('\r\n', '').split(',')[0]
     print("Starttime: " + str(starttime))
