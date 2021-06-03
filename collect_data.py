@@ -4,6 +4,9 @@ from pygame import mixer
 import time
 from pathlib import Path
 
+# module AHRS: Rohdaten -> Orientierung des Sensors im Raum
+
+
 mixer.init()
 mixer.music.load("beep.mp3")
 
