@@ -15,7 +15,7 @@ print(df_lettercount)
 
 duration = int(input("Zeitspanne: ")) * 1000
 
-arduino = serial.Serial(port='/dev/cu.usbmodem143201', baudrate=115200)  # Establish serial connection
+arduino = serial.Serial(port='/dev/cu.usbmodem142201', baudrate=115200)  # Establish serial connection
 for i in range(10):  # Dump old data
     arduino.readline()
     if i == 9:
