@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def main():
     # Read in data using pandas
     file = input("Dateiname (xyz.csv): ")
-    data = pd.read_csv(f'recorded_data/davidu/{file}.csv', sep=',', decimal='.')
+    data = pd.read_csv(f'split_data/A/{file}.csv', sep=',', decimal='.')
 
     fig, axs = plt.subplots(2, sharex=True, sharey=False)
     axs[0].plot(data['time'], data['accX'], label='X-axis')
