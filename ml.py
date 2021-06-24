@@ -15,7 +15,8 @@ def load_data(path) -> Tuple[np.ndarray, np.ndarray]:
 
     for foldername in sorted(os.listdir(path)):
         for filename in sorted(os.listdir(f'{path}/{foldername}')):
-            df = pd.read_csv(f'{path}/{foldername}/{filename}')
+            df = pd.read_csv(f'{path}/{foldername}/{filename}', index_col=0)
+            df.drop(columns=['time'], inplace=True)
             array = df.to_numpy()
             fill_len = 1000 - array.shape[0]
             full_array = np.full((fill_len, array.shape[1]), 0)
