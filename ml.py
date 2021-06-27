@@ -19,12 +19,18 @@ def load_data(path) -> Tuple[np.ndarray, np.ndarray]:
             df = pd.read_csv(f'{path}/{foldername}/{filename}', index_col=0)
             df.drop(columns=['id'], inplace=True)
             df.drop(columns=['time delta'], inplace=True)
+            # df.drop(columns=['time'], inplace=True)
             array = df.to_numpy()
+            sum = 0
+            for item in array:
+                sum += item
+            avg = sum / len(array)
             fill_len = 200 - array.shape[0]
-            full_array = np.full((fill_len, array.shape[1]), 0)
+            # fill_len = 1000 - array.shape[0]
+            full_array = np.full((fill_len, array.shape[1]), avg)
             array = np.concatenate((array, full_array))
             data.append(array)
-            label.append(ord(foldername)-64)
+            label.append(ord(foldername.upper())-65)
     data = np.stack(data, axis=0)
     label = np.array(label)
     return data, label
