@@ -11,8 +11,10 @@ from sklearn.model_selection import train_test_split
 
 # https://www.tensorflow.org/guide/keras/rnn
 
+# DATA_PATH = 'split_data'
 DATA_PATH = 'git_data/split_data'
-
+LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+          'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 def load_data(path) -> Tuple[np.ndarray, np.ndarray]:
     label = []
@@ -43,8 +45,11 @@ def build_model(input_shape: Tuple[int, int], num_classes: int) -> keras.Sequent
 
     model = keras.Sequential(layers=[
         keras.layers.InputLayer(input_shape=input_shape),
-        keras.layers.SimpleRNN(units=128, activation='relu', return_sequences=True),
-        keras.layers.SimpleRNN(units=128, activation='relu', return_sequences=False),
+        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=True),
+        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=True),
+        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=True),
+        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=True),
+        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=False),
         keras.layers.Dense(num_classes, activation=keras.activations.softmax)
     ])
     print(model.summary())
