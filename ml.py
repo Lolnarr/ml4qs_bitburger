@@ -5,6 +5,9 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from typing import Tuple
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
 
 # https://www.tensorflow.org/guide/keras/rnn
 
@@ -50,11 +53,26 @@ def build_model(input_shape: Tuple[int, int], num_classes: int) -> keras.Sequent
     return model
 
 
+def plot_confusion_matrix(labels, predictions, label_names):
+    confusion_matrix = tf.math.confusion_matrix(labels, predictions)
+    plt.figure()
+    sns.heatmap(confusion_matrix, xticklabels=label_names, yticklabels=label_names, annot=True, fmt='g')
+    plt.xlabel('Prediction')
+    plt.ylabel('Label')
+    plt.show()
+    pass
+
+
 def main():
     x, y = load_data(DATA_PATH)
-    y = tf.one_hot(y, depth=26)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+    y_train = tf.one_hot(y_train, depth=26)
+    #y_test = tf.one_hot(y_test, depth=26)
     model = build_model((200, 13), 26)
-    model.fit(x=x, y=y, epochs=10, batch_size=64)
+    # model = build_model((1000, 6), 26)
+    model.fit(x=x_train, y=y_train, epochs=10, batch_size=250, shuffle=True)
+    y_predicted = np.argmax(model.predict(x=x_test), axis=1)
+    plot_confusion_matrix(y_test, y_predicted, LETTER)
 
 
 if __name__ == '__main__':
