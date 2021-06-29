@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import numpy as np
 
 DATA_PATH = 'recorded_data/LennartB'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
