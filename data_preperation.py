@@ -45,6 +45,46 @@ def split_git_data(path: str):
                     prev_id = row['id']
 
 
+def normalize_data(path: str):
+    for folder_name in os.listdir(path):
+        i = 0
+        for file_name in os.listdir(f'{path}/{folder_name}'):
+            num_letters = len(os.listdir(f'{path}/{folder_name}'))
+            per_training = round(num_letters * 0.6)
+            per_validation = round(num_letters * 0.1)
+            per_test = round(num_letters * 0.3)
+
+            df = pd.read_csv(f'{path}/{folder_name}/{file_name}', index_col=0)
+            df.drop(columns=['time'], inplace=True)
+            df = resample_fixed(df, 500)
+            if i <= per_training:
+                partition = 'training'
+            elif i <= per_validation+per_training:
+                partition = 'validation'
+            elif i <= per_test+per_validation+per_training:
+                partition = 'test'
+            # partition = np.random.choice(['training', 'validation', 'test'], 1, p=[0.7, 0.1, 0.2])  # TODO
+            if not os.path.exists(f'normalized_data/{partition}/{folder_name}'):
+                os.mkdir(f'normalized_data/{partition}/{folder_name}')
+            df.to_csv(f'normalized_data/{partition}/{folder_name}/{file_name}')
+            i += 1
+
+
+def resample_fixed(df: pd.DataFrame, n_new: int) -> pd.DataFrame:
+    n_old, m = df.values.shape
+    mat_old = df.values
+    mat_new = np.zeros((n_new, m))
+    x_old = np.linspace(df.index.min(), df.index.max(), n_old)
+    x_new = np.linspace(df.index.min(), df.index.max(), n_new)
+
+    for j in range(m):
+        y_old = mat_old[:, j]
+        y_new = np.interp(x_new, x_old, y_old)
+        mat_new[:, j] = y_new
+
+    return pd.DataFrame(mat_new, index=x_new, columns=df.columns)
+
+
 def get_count(path: str) -> int:
     count = 1
     for filename in os.listdir(path):
@@ -54,7 +94,7 @@ def get_count(path: str) -> int:
 
 
 def main():
-    split_git_data('git_data/data')
+    normalize_data('split_data')
 
 
 if __name__ == '__main__':
