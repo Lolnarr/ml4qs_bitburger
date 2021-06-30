@@ -94,18 +94,30 @@ def plot_confusion_matrix(labels, predictions, label_names):
     pass
 
 
+def plot_history(history: keras.callbacks.History):
+    fig, axs = plt.subplots(2)
+    fig.suptitle('Training History', fontsize=16)
+    axs[0].plot(history.epoch, history.history['loss'], history.history['val_loss'])
+    axs[0].set(title='Loss', xlabel='Epoch', ylabel='Loss')
+    axs[0].legend(['loss', 'val_loss'])
+    axs[1].plot(history.epoch, history.history['accuracy'], history.history['val_accuracy'])
+    axs[1].set(title='Accuracy', xlabel='Epoch', ylabel='Accuracy')
+    axs[1].legend(['accuracy', 'val_accuracy'])
+    plt.show()
+
+
 def main():
-    train_generator = DataGenerator(get_path_df(TRAIN_PATH), shape=(500, 6), batch_size=32)
-    val_generator = DataGenerator(get_path_df(VAL_PATH), shape=(500, 6), batch_size=32)
-    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(500, 6), batch_size=32)
+    train_generator = DataGenerator(get_path_df(TRAIN_PATH), shape=(50, 13), batch_size=32)
+    val_generator = DataGenerator(get_path_df(VAL_PATH), shape=(50, 13), batch_size=32)
+    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(50, 13), batch_size=32)
 
     # x, y = load_data(DATA_PATH)
     # x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
     # y_train = tf.one_hot(y_train, depth=26)
     # y_test = tf.one_hot(y_test, depth=26)
-    model = build_model((500, 6), 26)
-    # model = build_model((1000, 6), 26)
-    model.fit(train_generator, epochs=30, validation_data=val_generator)
+    model = build_model((50, 13), 26)
+    # model = build_model((500, 6), 26)
+    history = model.fit(train_generator, epochs=10, validation_data=val_generator)
     # model.fit(train_generator, epochs=10, batch_size=128, shuffle=True)
     # y_predicted = model.predict(test_generator)
     # plot_confusion_matrix(test_generator.classes, y_predicted, LETTER)
@@ -123,6 +135,8 @@ def main():
     plt.xlabel('Prediction')
     plt.ylabel('Label')
     plt.show()
+
+    plot_history(history)
 
 
 if __name__ == '__main__':
