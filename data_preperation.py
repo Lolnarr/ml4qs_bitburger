@@ -63,7 +63,7 @@ def normalize_data(path: str):
                 partition = 'validation'
             elif i <= per_test+per_validation+per_training:
                 partition = 'test'
-            # partition = np.random.choice(['training', 'validation', 'test'], 1, p=[0.7, 0.1, 0.2])  # TODO
+            # partition = np.random.choice(['training', 'validation', 'test'], 1, p=[0.7, 0.1, 0.2])
             if not os.path.exists(f'normalized_data/{partition}/{folder_name}'):
                 os.mkdir(f'normalized_data/{partition}/{folder_name}')
             df.to_csv(f'normalized_data/{partition}/{folder_name}/{file_name}')

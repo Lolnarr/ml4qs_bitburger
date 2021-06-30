@@ -12,13 +12,15 @@ from sklearn.metrics import confusion_matrix
 
 from DataGenerator import DataGenerator
 
+
+# TODO LennartB: GPU Accel, Transfer from git to our data, saving the model and using it
 # https://www.tensorflow.org/guide/keras/rnn
 
 # DATA_PATH = 'split_data'
-DATA_PATH = 'split_data'
-TRAIN_PATH = 'normalized_data/training'
-TEST_PATH = 'normalized_data/test'
-VAL_PATH = 'normalized_data/validation'
+DATA_PATH = 'git_data/split_data'
+TRAIN_PATH = 'git_data/normalized_data/training'
+TEST_PATH = 'git_data/normalized_data/test'
+VAL_PATH = 'git_data/normalized_data/validation'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
