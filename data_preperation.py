@@ -66,7 +66,7 @@ def normalize_data(path: str):
             # partition = np.random.choice(['training', 'validation', 'test'], 1, p=[0.7, 0.1, 0.2])
             if not os.path.exists(f'normalized_data/{partition}/{folder_name}'):
                 os.mkdir(f'normalized_data/{partition}/{folder_name}')
-            df.to_csv(f'normalized_data/{partition}/{folder_name}/{file_name}')
+            df.to_csv(f'normalized_data/{partition}/{folder_name}/{file_name}', index=False)
             i += 1
 
 
@@ -82,7 +82,7 @@ def resample_fixed(df: pd.DataFrame, n_new: int) -> pd.DataFrame:
         y_new = np.interp(x_new, x_old, y_old)
         mat_new[:, j] = y_new
 
-    return pd.DataFrame(mat_new, index=x_new, columns=df.columns)
+    return pd.DataFrame(mat_new, columns=df.columns)
 
 
 def get_count(path: str) -> int:

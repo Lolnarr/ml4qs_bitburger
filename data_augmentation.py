@@ -25,7 +25,7 @@ def add_noise(path: str):
                 noise = np.random.normal(mu, sigma, [500, 7])
                 df = pd.read_csv(f'{path}/{foldername}/{filename}')
                 fusion = df + noise
-                fusion.to_csv(f'augmented_data/{datafolder}/{foldername}/{letter}_noise_{count}.csv')
+                fusion.to_csv(f'augmented_data/{datafolder}/{foldername}/{letter}_noise_{count}.csv', index=False)
                 count += 1
 
 
