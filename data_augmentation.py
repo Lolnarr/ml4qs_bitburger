@@ -8,7 +8,7 @@ VAL_PATH = 'normalized_data/validation'
 
 
 def add_noise(path: str):
-    mu, sigma = 0, 0.1
+    mu, sigma = 0, 1.0
     for foldername in os.listdir(path):
         if os.path.basename(path) == 'training':
             datafolder = 'training'
@@ -21,8 +21,8 @@ def add_noise(path: str):
         for filename in os.listdir(f'{path}/{foldername}'):
             letter = filename.split('.')[0]
             count = 1
-            while count <= 3:
-                noise = np.random.normal(mu, sigma, [500, 7])
+            while count <= 4:
+                noise = np.random.normal(mu, sigma, [500, 6])
                 df = pd.read_csv(f'{path}/{foldername}/{filename}')
                 fusion = df + noise
                 fusion.to_csv(f'augmented_data/{datafolder}/{foldername}/{letter}_noise_{count}.csv', index=False)
