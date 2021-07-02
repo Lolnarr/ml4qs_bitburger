@@ -8,20 +8,24 @@ import seaborn as sns
 import pandas as pd
 import os
 
-TEST_PATH = 'git_data/normalized_data_2/test'
+TEST_PATH = 'bitburger_testdata'
+# TEST_PATH = 'git_data/normalized_data_transfer/test'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 
 def main():
-    model = keras.models.load_model('keras_model.h5')
+    SHAPE_X = 50
+    SHAPE_Y = 6
+
+    model = keras.models.load_model('model_git_norm_trans.h5')
 
     model.compile(optimizer=keras.optimizers.Adam(), loss=keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])
 
-    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(50, 13), batch_size=32)
+    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
 
-    # result = model.predict(test_generator)
+    model.evaluate(test_generator, batch_size=32, verbose=1)
 
     n_batches = len(test_generator)
 

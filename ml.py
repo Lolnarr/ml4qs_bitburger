@@ -13,14 +13,15 @@ from sklearn.metrics import confusion_matrix
 from DataGenerator import DataGenerator
 
 
-# TODO LennartB: GPU Accel, Transfer from git to our data, saving the model and using it
+# TODO LennartB: Transfer from git to our data (wieder eine Gerade statt einer Diagonalen)
+# DONE LennartB: GPU Accel, saving the model and using it
 # https://www.tensorflow.org/guide/keras/rnn
 
 # DATA_PATH = 'split_data'
 DATA_PATH = 'git_data/split_data'
-TRAIN_PATH = 'git_data/normalized_data_2/training'
-TEST_PATH = 'git_data/normalized_data_2/test'
-VAL_PATH = 'git_data/normalized_data_2/validation'
+TRAIN_PATH = 'git_data/normalized_data_transfer/training'
+TEST_PATH = 'git_data/normalized_data_transfer/test'
+VAL_PATH = 'git_data/normalized_data_transfer/validation'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -108,7 +109,7 @@ def plot_history(history: keras.callbacks.History):
 
 def main():
     SHAPE_X = 50
-    SHAPE_Y = 13
+    SHAPE_Y = 6
 
     train_generator = DataGenerator(get_path_df(TRAIN_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
     val_generator = DataGenerator(get_path_df(VAL_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
@@ -124,7 +125,7 @@ def main():
     # y_predicted = model.predict(test_generator)
     # plot_confusion_matrix(test_generator.classes, y_predicted, LETTER)
 
-    model.save(filepath='keras_model.h5', overwrite=True)
+    model.save(filepath='model_git_norm_trans.h5', overwrite=True)
 
     n_batches = len(test_generator)
 

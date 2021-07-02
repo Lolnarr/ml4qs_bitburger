@@ -126,7 +126,7 @@ def main():
     plot_confusion_matrix(y_true=y_test, y_predicted=y_predicted, label_names=LABELS)
 
     # Save the model using tensorflow
-    model.save(filepath='keras_model.h5', overwrite=True)
+    model.save(filepath='model_git_norm_2.h5', overwrite=True)
 
 
 if __name__ == '__main__':
