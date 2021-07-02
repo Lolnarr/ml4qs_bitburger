@@ -49,5 +49,3 @@ class DataGenerator(keras.utils.Sequence):
             X[i,] = data.values
             y[i] = ord(self.df['label'].iloc[ID].upper()) - 65
         return X, tf.one_hot(y, depth=26)
-
-

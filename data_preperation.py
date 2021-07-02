@@ -2,6 +2,8 @@ import os
 import pandas as pd
 import numpy as np
 
+from ahrs.madgwickahrs import MadgwickAHRS
+
 DATA_PATH = 'recorded_data/LennartB'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
@@ -93,8 +95,30 @@ def get_count(path: str) -> int:
     return count
 
 
+def apply_ahrs(path: str):
+    ahrs = MadgwickAHRS()
+    for folder_name in os.listdir(path):
+        if not os.path.exists(f'ahrs_data/{folder_name}'):
+            os.mkdir(f'ahrs_data/{folder_name}')
+        for file_name in os.listdir(f'{path}/{folder_name}'):
+            df = pd.read_csv(f'{path}/{folder_name}/{file_name}', index_col=0)
+            rpy = []
+            for index, row in df.iterrows():
+                acc_xyz = [row['accX'], row['accY'], row['accZ']]
+                gyro_xyz = [row['gyrX'], row['gyrY'], row['gyrZ']]
+                ahrs.update_imu(gyro_xyz, acc_xyz)
+                rpy_row = ahrs.quaternion.to_euler_angles()
+                rpy.append(rpy_row)
+            rpy = np.array(rpy)
+            rpy = rpy.transpose()
+            df['roll'] = rpy[0]
+            df['pitch'] = rpy[1]
+            df['yaw'] = rpy[2]
+            df.to_csv(f'ahrs_data/{folder_name}/{file_name}')
+
+
 def main():
-    normalize_data('split_data')
+    apply_ahrs('split_data')
 
 
 if __name__ == '__main__':
