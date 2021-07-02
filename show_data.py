@@ -3,6 +3,7 @@ import time
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 def main(letter):
     # Read in data using pandas
     for i in range(21):
