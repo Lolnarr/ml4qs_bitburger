@@ -133,13 +133,6 @@ def rotate_data(path: str):
                 count += 1
 
 
-# def quaternion_to_rotation_matrix(q):
-#     a, b, c, d = q
-#     return np.array([[a ** 2 + b ** 2 - c ** 2 - d ** 2, 2 * b * c - 2 * a * d, 2 * b * d + 2 * a * c],
-#                      [2 * b * c + 2 * a * d, a ** 2 - b ** 2 + c ** 2 - d ** 2, 2 * c * d - 2 * a * b],
-#                      [2 * b * d - 2 * a * c, 2 * c * d + 2 * a * b, a ** 2 - b ** 2 - c ** 2 + d ** 2]])
-
-
 def main():
     add_gyronoise(TRAIN_PATH)
     add_gyronoise(TEST_PATH)
