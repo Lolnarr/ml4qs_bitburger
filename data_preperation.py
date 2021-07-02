@@ -55,8 +55,10 @@ def normalize_data(path: str):
             per_test = round(num_letters * 0.3)
 
             df = pd.read_csv(f'{path}/{folder_name}/{file_name}', index_col=0)
-            df.drop(columns=['time'], inplace=True)
-            df = resample_fixed(df, 500)
+            # df.drop(columns=['time'], inplace=True)
+            df.drop(columns=['time delta'], inplace=True)
+            df.drop(columns=['id'], inplace=True)
+            df = resample_fixed(df, 50)
             if i <= per_training:
                 partition = 'training'
             elif i <= per_validation+per_training:
@@ -64,9 +66,9 @@ def normalize_data(path: str):
             elif i <= per_test+per_validation+per_training:
                 partition = 'test'
             # partition = np.random.choice(['training', 'validation', 'test'], 1, p=[0.7, 0.1, 0.2])
-            if not os.path.exists(f'normalized_data/{partition}/{folder_name}'):
-                os.mkdir(f'normalized_data/{partition}/{folder_name}')
-            df.to_csv(f'normalized_data/{partition}/{folder_name}/{file_name}', index=False)
+            if not os.path.exists(f'git_data/normalized_data_2/{partition}/{folder_name}'):
+                os.mkdir(f'git_data/normalized_data_2/{partition}/{folder_name}')
+            df.to_csv(f'git_data/normalized_data_2/{partition}/{folder_name}/{file_name}', index=False)
             i += 1
 
 
@@ -94,7 +96,7 @@ def get_count(path: str) -> int:
 
 
 def main():
-    normalize_data('split_data')
+    normalize_data('git_data/split_data')
 
 
 if __name__ == '__main__':
