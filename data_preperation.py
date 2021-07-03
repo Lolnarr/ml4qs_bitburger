@@ -57,9 +57,10 @@ def normalize_data(path: str):
             per_test = round(num_letters * 0)  # 0.3
 
             df = pd.read_csv(f'{path}/{folder_name}/{file_name}', index_col=0)
-            df.drop(columns=['time'], inplace=True)
-            # df.drop(columns=['time delta', 'id', 'ax2', 'ay2', 'az2', 'ax3', 'ay3', 'az3', 'c'], inplace=True)
-            df = resample_fixed(df, 50)
+            df.drop(columns=['time', 'accX', 'accY', 'accZ', 'gyrX', 'gyrY', 'gyrZ'], inplace=True)
+            # df.drop(columns=['time delta', 'id', 'ax1', 'ay1', 'az1', 'ax2', 'ay2', 'az2', 'ax3', 'ay3', 'az3', 'c'],
+            #        inplace=True)
+            df = resample_fixed(df, 200)
             if i <= per_training:
                 partition = 'training'
             elif i <= per_validation+per_training:
@@ -122,7 +123,6 @@ def main():
     normalize_data('split_data')
     # normalize_data('git_data/split_data')
     # apply_ahrs('split_data')
-    pass
 
 
 if __name__ == '__main__':

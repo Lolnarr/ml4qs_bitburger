@@ -45,7 +45,7 @@ class DataGenerator(keras.utils.Sequence):
 
         for i, ID in enumerate(batch_ids):
             data = pd.read_csv(self.df['data_path'].iloc[ID])
-            # data.drop("Unnamed: 0", axis=1, inplace=True)
+            # data.drop(columns=['ax1', 'ay1', 'az1', 'ax2', 'ay2', 'az2', 'ax3', 'ay3', 'az3', 'c'], inplace=True)
             X[i,] = data.values
             y[i] = ord(self.df['label'].iloc[ID].upper()) - 65
         return X, tf.one_hot(y, depth=26)

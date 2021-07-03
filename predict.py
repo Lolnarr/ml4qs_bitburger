@@ -1,4 +1,3 @@
-from keras.models import load_model
 from tensorflow import keras
 from DataGenerator import DataGenerator
 from sklearn.metrics import confusion_matrix
@@ -8,17 +7,17 @@ import seaborn as sns
 import pandas as pd
 import os
 
-TEST_PATH = 'bitburger_testdata'
+TEST_PATH = 'normalized_data/test'
 # TEST_PATH = 'git_data/normalized_data_transfer/test'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 
 def main():
-    SHAPE_X = 50
-    SHAPE_Y = 6
+    SHAPE_X = 200
+    SHAPE_Y = 3
 
-    model = keras.models.load_model('model_git_norm_trans.h5')
+    model = keras.models.load_model('model_git_norm_3.h5')
 
     model.compile(optimizer=keras.optimizers.Adam(), loss=keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])

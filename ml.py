@@ -19,9 +19,9 @@ from DataGenerator import DataGenerator
 
 # DATA_PATH = 'split_data'
 DATA_PATH = 'git_data/split_data'
-TRAIN_PATH = 'git_data/normalized_data_transfer/training'
-TEST_PATH = 'git_data/normalized_data_transfer/test'
-VAL_PATH = 'git_data/normalized_data_transfer/validation'
+TRAIN_PATH = 'git_data/normalized_data/training'
+TEST_PATH = 'git_data/normalized_data/test'
+VAL_PATH = 'git_data/normalized_data/validation'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -108,24 +108,24 @@ def plot_history(history: keras.callbacks.History):
 
 
 def main():
-    SHAPE_X = 50
-    SHAPE_Y = 6
+    SHAPE_X = 200
+    SHAPE_Y = 3
 
-    train_generator = DataGenerator(get_path_df(TRAIN_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
-    val_generator = DataGenerator(get_path_df(VAL_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
-    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
+    train_generator = DataGenerator(get_path_df(TRAIN_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=128)
+    val_generator = DataGenerator(get_path_df(VAL_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=128)
+    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=128)
 
     # x, y = load_data(DATA_PATH)
     # x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
     # y_train = tf.one_hot(y_train, depth=26)
     # y_test = tf.one_hot(y_test, depth=26)
     model = build_model((SHAPE_X, SHAPE_Y), 26)
-    history = model.fit(train_generator, epochs=15, validation_data=val_generator)
+    history = model.fit(train_generator, epochs=30, validation_data=val_generator)
     # model.fit(train_generator, epochs=10, batch_size=128, shuffle=True)
     # y_predicted = model.predict(test_generator)
     # plot_confusion_matrix(test_generator.classes, y_predicted, LETTER)
 
-    model.save(filepath='model_git_norm_trans.h5', overwrite=True)
+    model.save(filepath='model_git_norm_3.h5', overwrite=True)
 
     n_batches = len(test_generator)
 
