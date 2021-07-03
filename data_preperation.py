@@ -52,7 +52,7 @@ def normalize_data(path: str):
         i = 0
         for file_name in os.listdir(f'{path}/{folder_name}'):
             num_letters = len(os.listdir(f'{path}/{folder_name}'))
-            per_training = round(num_letters * 1)  # 0.6
+            per_training = round(num_letters * 0)  # 0.6
             per_validation = round(num_letters * 0)  # 0.1
             per_test = round(num_letters * 1)  # 0.3
 
@@ -67,6 +67,8 @@ def normalize_data(path: str):
                 partition = 'validation'
             elif i <= per_test+per_validation+per_training:
                 partition = 'test'
+
+            partition = 'test'
             # partition = np.random.choice(['training', 'validation', 'test'], 1, p=[0.7, 0.1, 0.2])
             if not os.path.exists(f'normalized_data/{partition}/{folder_name}'): #f'bitburger_testdata/{folder_name}'
                 os.mkdir(f'normalized_data/{partition}/{folder_name}') #f'bitburger_testdata/{folder_name}
