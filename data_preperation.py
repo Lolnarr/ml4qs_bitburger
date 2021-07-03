@@ -54,7 +54,7 @@ def normalize_data(path: str):
             num_letters = len(os.listdir(f'{path}/{folder_name}'))
             per_training = round(num_letters * 1)  # 0.6
             per_validation = round(num_letters * 0)  # 0.1
-            per_test = round(num_letters * 0)  # 0.3
+            per_test = round(num_letters * 1)  # 0.3
 
             df = pd.read_csv(f'{path}/{folder_name}/{file_name}', index_col=0)
             df.drop(columns=['time', 'accX', 'accY', 'accZ', 'gyrX', 'gyrY', 'gyrZ'], inplace=True)
@@ -68,9 +68,9 @@ def normalize_data(path: str):
             elif i <= per_test+per_validation+per_training:
                 partition = 'test'
             # partition = np.random.choice(['training', 'validation', 'test'], 1, p=[0.7, 0.1, 0.2])
-            if not os.path.exists(f'bitburger_testdata/{folder_name}'):
-                os.mkdir(f'bitburger_testdata/{folder_name}')  # f'git_data/normalized_data_transfer/{partition}/{folder_name}'
-            df.to_csv(f'bitburger_testdata/{folder_name}/{file_name}', index=False)
+            if not os.path.exists(f'normalized_data/{partition}/{folder_name}'): #f'bitburger_testdata/{folder_name}'
+                os.mkdir(f'normalized_data/{partition}/{folder_name}') #f'bitburger_testdata/{folder_name}
+            df.to_csv(f'normalized_data/{partition}/{folder_name}/{file_name}', index=False) #f'bitburger_testdat/{folder_name}/{file_name}
             i += 1
 
 
@@ -120,7 +120,7 @@ def apply_ahrs(path: str):
 
 
 def main():
-    normalize_data('split_data')
+    normalize_data('ahrs_data')
     # normalize_data('git_data/split_data')
     # apply_ahrs('split_data')
 
