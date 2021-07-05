@@ -19,8 +19,8 @@ def add_gyronoise(df: pd.DataFrame):
 
 
 def add_noise(df: pd.DataFrame):
-    mu, sigma = 0, 1.0
-    noise = np.random.normal(mu, sigma, [500, 9])
+    mu, sigma = 200, 400
+    noise = np.random.normal(mu, sigma, [100, 9])
     fusion = df + noise #df[['roll', 'pitch', 'yaw']] + noise
     return fusion
 
@@ -32,7 +32,7 @@ def stretch_data(df: pd.DataFrame):
 
 
 def stretch_gyrodata(df: pd.DataFrame):
-    accX, accY, accZ, gyrX, gyrY, gyrZ, r, p, y = np.random.randn(9) * 0.3 + 1
+    accX, accY, accZ, gyrX, gyrY, gyrZ, r, p, y = np.random.randn(9) * 0.5 + 1
     df_new = df * np.array([accX, accY, accZ, gyrX, gyrY, gyrZ, r, p, y])
     # df['gyrX'] = df_new['gyrX']
     # df['gyrY'] = df_new['gyrY']
@@ -65,8 +65,8 @@ def start_augmentation(path: str, rotate=False, gyronoise=False, noise=True, gyr
             datafolder = 'test'
         elif os.path.basename(path) == 'validation':
             datafolder = 'validation'
-        if not os.path.exists(f'augmented_data/{datafolder}/{foldername}'):
-            os.makedirs(f'augmented_data/{datafolder}/{foldername}')
+        # if not os.path.exists(f'augmented_data/{datafolder}/{foldername}'):
+            # os.makedirs(f'augmented_data/{datafolder}/{foldername}')
         for filename in os.listdir(f'{path}/{foldername}'):
             letter = filename.split('.')[0]
             count = 1
@@ -82,14 +82,14 @@ def start_augmentation(path: str, rotate=False, gyronoise=False, noise=True, gyr
                     df = add_gyronoise(df)
                 if noise:
                     df = add_noise(df)
-                df.to_csv(f'augmented_data/{datafolder}/{foldername}/{letter}_augmented_{count}.csv', index=False)
+                df.to_csv(f'normalized_data/{datafolder}/{foldername}/{letter}_augmented_{count}.csv', index=False)
                 count += 1
 
 
 def main():
-    #start_augmentation(TRAIN_PATH)
+    start_augmentation(TRAIN_PATH)
     start_augmentation(TEST_PATH)
-    #start_augmentation(VAL_PATH)
+    start_augmentation(VAL_PATH)
 
 
 if __name__ == '__main__':

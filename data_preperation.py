@@ -52,15 +52,15 @@ def normalize_data(path: str):
         i = 0
         for file_name in os.listdir(f'{path}/{folder_name}'):
             num_letters = len(os.listdir(f'{path}/{folder_name}'))
-            per_training = round(num_letters * 0)  # 0.6
-            per_validation = round(num_letters * 0)  # 0.1
-            per_test = round(num_letters * 1)  # 0.3
+            per_training = round(num_letters * 0.6)  # 0
+            per_validation = round(num_letters * 0.1)  # 0
+            per_test = round(num_letters * 0.3)  # 1
 
             df = pd.read_csv(f'{path}/{folder_name}/{file_name}', index_col=0)
-            df.drop(columns=['time', 'accX', 'accY', 'accZ', 'gyrX', 'gyrY', 'gyrZ'], inplace=True)
+            df.drop(columns=['time'], inplace=True)
             # df.drop(columns=['time delta', 'id', 'ax1', 'ay1', 'az1', 'ax2', 'ay2', 'az2', 'ax3', 'ay3', 'az3', 'c'],
             #        inplace=True)
-            df = resample_fixed(df, 200)
+            df = resample_fixed(df, 100)
             if i <= per_training:
                 partition = 'training'
             elif i <= per_validation+per_training:
@@ -68,10 +68,10 @@ def normalize_data(path: str):
             elif i <= per_test+per_validation+per_training:
                 partition = 'test'
 
-            partition = 'test'
+            # partition = 'test'
             # partition = np.random.choice(['training', 'validation', 'test'], 1, p=[0.7, 0.1, 0.2])
             if not os.path.exists(f'normalized_data/{partition}/{folder_name}'): #f'bitburger_testdata/{folder_name}'
-                os.mkdir(f'normalized_data/{partition}/{folder_name}') #f'bitburger_testdata/{folder_name}
+                os.makedirs(f'normalized_data/{partition}/{folder_name}') #f'bitburger_testdata/{folder_name}
             df.to_csv(f'normalized_data/{partition}/{folder_name}/{file_name}', index=False) #f'bitburger_testdat/{folder_name}/{file_name}
             i += 1
 
