@@ -4,24 +4,24 @@ import numpy as np
 
 from ahrs.madgwickahrs import MadgwickAHRS
 
-DATA_PATH = 'recorded_data/LennartB'
-LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-          'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+DATA_PATH = 'recorded_data/DavidU2/Z.CSV'
+LETTER = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+          'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
 
 def split_data(df: pd.DataFrame, letter: str):
-    if not os.path.exists(f'split_data/{letter}'):
-        os.mkdir(f'split_data/{letter}')
+    if not os.path.exists(f'split_data2/{letter}'):
+        os.makedirs(f'split_data2/{letter}')
     count = get_count(letter) + 1
     prev_time = 0
     for index, row in df.iterrows():
         if row['time'] < prev_time:
             df_new = df[df.index < index]
             df.drop(df[df.index < index].index, inplace=True)
-            df_new.to_csv(f'split_data/{letter}/{letter}_{count}.csv')
+            df_new.to_csv(f'split_data2/{letter}/{letter}_{count}.csv')
             count += 1
         prev_time = row['time']
-    df.to_csv(f'split_data/{letter}/{letter}_{count}.csv')
+    df.to_csv(f'split_data2/{letter}/{letter}_{count}.csv')
 
 
 def split_git_data(path: str):
@@ -93,7 +93,7 @@ def resample_fixed(df: pd.DataFrame, n_new: int) -> pd.DataFrame:
 
 def get_count(path: str) -> int:
     count = 1
-    for filename in os.listdir(path):
+    for filename in os.listdir('split_data2/' + path):
         i = int(filename.split('.')[0].split('_')[1])
         count = i if i > count else count
     return count
@@ -122,7 +122,8 @@ def apply_ahrs(path: str):
 
 
 def main():
-    normalize_data('ahrs_data')
+    df = pd.read_csv(DATA_PATH)
+    split_data(df, 'Z')
     # normalize_data('git_data/split_data')
     # apply_ahrs('split_data')
 
