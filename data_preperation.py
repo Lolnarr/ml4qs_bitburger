@@ -4,7 +4,7 @@ import numpy as np
 
 from ahrs.madgwickahrs import MadgwickAHRS
 
-DATA_PATH = 'recorded_data/DavidU2/Z.CSV'
+DATA_PATH = 'new_split_data'
 LETTER = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
           'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -122,9 +122,9 @@ def apply_ahrs(path: str):
 
 
 def main():
-    df = pd.read_csv(DATA_PATH)
-    split_data(df, 'Z')
-    # normalize_data('git_data/split_data')
+    #df = pd.read_csv(DATA_PATH)
+    #split_data(df, 'Z')
+    normalize_data(DATA_PATH)
     # apply_ahrs('split_data')
 
 
