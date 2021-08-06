@@ -64,9 +64,9 @@ def build_model(input_shape: Tuple[int, int], num_classes: int) -> keras.Sequent
     model = keras.Sequential(layers=[
         keras.layers.InputLayer(input_shape=input_shape),
         #best so far: 200 units
-        keras.layers.LSTM(units=200, return_sequences=True),
-        keras.layers.LSTM(units=200, return_sequences=True),
-        keras.layers.LSTM(units=200),
+        keras.layers.LSTM(units=100, return_sequences=True),
+        keras.layers.LSTM(units=100, return_sequences=True),
+        keras.layers.LSTM(units=100),
         keras.layers.Dense(num_classes, activation=keras.activations.softmax)
     ])
     """

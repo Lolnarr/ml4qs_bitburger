@@ -20,7 +20,7 @@ def add_gyronoise(df: pd.DataFrame):
 
 def add_noise(df: pd.DataFrame):
     mu, sigma = 200, 400
-    noise = np.random.normal(mu, sigma, [100, 9])
+    noise = np.random.normal(mu, sigma, [100, 6])
     fusion = df + noise #df[['roll', 'pitch', 'yaw']] + noise
     return fusion
 
@@ -32,12 +32,16 @@ def stretch_data(df: pd.DataFrame):
 
 
 def stretch_gyrodata(df: pd.DataFrame):
-    accX, accY, accZ, gyrX, gyrY, gyrZ, r, p, y = np.random.randn(9) * 0.5 + 1
-    df_new = df * np.array([accX, accY, accZ, gyrX, gyrY, gyrZ, r, p, y])
+    mu, sigma = 1, 0.2
+    stretch = np.random.normal(mu, sigma, [100, 6])
+    fusion = df * stretch  # df[['roll', 'pitch', 'yaw']] + noise
+    return fusion
+    #accX, accY, accZ, gyrX, gyrY, gyrZ = np.random.randn(6) * 0.3 + 0.7
+    #df_new = df * np.array([accX, accY, accZ, gyrX, gyrY, gyrZ])
     # df['gyrX'] = df_new['gyrX']
     # df['gyrY'] = df_new['gyrY']
     # df['gyrZ'] = df_new['gyrZ']
-    return df_new
+    #return df_new
 
 
 def rotate_data(df: pd.DataFrame):
@@ -70,7 +74,7 @@ def start_augmentation(path: str, rotate=False, gyronoise=False, noise=True, gyr
         for filename in os.listdir(f'{path}/{foldername}'):
             letter = filename.split('.')[0]
             count = 1
-            while count <= 2:
+            while count <= 5:
                 df = pd.read_csv(f'{path}/{foldername}/{filename}')
                 if rotate:
                     df = rotate_data(df)

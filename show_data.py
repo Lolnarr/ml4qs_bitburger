@@ -8,7 +8,7 @@ def main():
     # Read in data using pandas
     # for i in range(21):
         # file = input("Dateiname (xyz.csv): ")
-        data = pd.read_csv(f'split_data/Z/Z_7.csv', sep=',', decimal='.')
+        data = pd.read_csv(f'normalized_data/training/A/A_1_augmented_5.csv', sep=',', decimal='.')
 
         fig, axs = plt.subplots(2, sharex=True, sharey=False)
         axs[0].plot(data.index, data['accX'], label='X-axis')
