@@ -24,9 +24,6 @@ def stretch_data(df: pd.DataFrame):
     return fusion
     #accX, accY, accZ, gyrX, gyrY, gyrZ = np.random.randn(6) * 0.3 + 0.7
     #df_new = df * np.array([accX, accY, accZ, gyrX, gyrY, gyrZ])
-    # df['gyrX'] = df_new['gyrX']
-    # df['gyrY'] = df_new['gyrY']
-    # df['gyrZ'] = df_new['gyrZ']
     #return df_new
 
 
