@@ -14,17 +14,17 @@ LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
 
 
 def main():
-    SHAPE_X = 200
-    SHAPE_Y = 3
+    SHAPE_X = 100
+    SHAPE_Y = 6
 
-    model = keras.models.load_model('model_git_norm_3.h5')
+    model = keras.models.load_model('model_augm_epochs100.h5')
 
     model.compile(optimizer=keras.optimizers.Adam(), loss=keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])
 
-    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
+    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=64)
 
-    model.evaluate(test_generator, batch_size=32, verbose=1)
+    model.evaluate(test_generator, batch_size=64, verbose=1)
 
     n_batches = len(test_generator)
 

@@ -129,7 +129,7 @@ def main():
     loss, acc = model.evaluate(test_generator)
     print('test loss:', loss)
     print('test accuracy:', acc)
-    model.save(filepath='model_git_norm_5.h5', overwrite=True)
+    model.save(filepath='saved_models/model_augm_epochs50.h5', overwrite=True)
 
     n_batches = len(test_generator)
 
