@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-PATH = 'new_split_data'
+PATH = 'split_data'
 
 
 def main():
