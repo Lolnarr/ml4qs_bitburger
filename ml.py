@@ -19,9 +19,9 @@ from DataGenerator import DataGenerator
 
 # DATA_PATH = 'split_data'
 DATA_PATH = 'git_data/split_data'
-TRAIN_PATH = 'normalized_data/training'
-TEST_PATH = 'normalized_data/test'
-VAL_PATH = 'normalized_data/validation'
+TRAIN_PATH = 'augmented_data/training'
+TEST_PATH = 'augmented_data/test'
+VAL_PATH = 'augmented_data/validation'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
