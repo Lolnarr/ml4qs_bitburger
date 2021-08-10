@@ -19,9 +19,9 @@ from DataGenerator import DataGenerator
 
 # DATA_PATH = 'split_data'
 DATA_PATH = 'git_data/split_data'
-TRAIN_PATH = 'augmented_data/training'
-TEST_PATH = 'augmented_data/test'
-VAL_PATH = 'augmented_data/validation'
+TRAIN_PATH = 'DATA/augmented_data/training'
+TEST_PATH = 'DATA/augmented_data/test'
+VAL_PATH = 'DATA/augmented_data/validation'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -129,7 +129,7 @@ def main():
     loss, acc = model.evaluate(test_generator)
     print('test loss:', loss)
     print('test accuracy:', acc)
-    model.save(filepath='saved_models/model_augm_epochs50.h5', overwrite=True)
+    model.save(filepath='saved_models/100units_64batch_50epochs_augm/model_augm_epochs50.h5', overwrite=True)
 
     n_batches = len(test_generator)
 
