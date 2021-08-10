@@ -7,7 +7,7 @@ import seaborn as sns
 import pandas as pd
 import os
 
-TEST_PATH = 'normalized_data/test'
+TEST_PATH = 'DATA/normalized_data/test'
 # TEST_PATH = 'git_data/normalized_data_transfer/test'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
@@ -17,7 +17,7 @@ def main():
     SHAPE_X = 100
     SHAPE_Y = 6
 
-    model = keras.models.load_model('model_augm_epochs100.h5')
+    model = keras.models.load_model('saved_models/git_model/model_git_norm_2.h5')
 
     model.compile(optimizer=keras.optimizers.Adam(), loss=keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])
