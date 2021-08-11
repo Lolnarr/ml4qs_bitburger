@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 
-from ahrs.madgwickahrs import MadgwickAHRS
+from apply_ahrs.madgwickahrs import MadgwickAHRS
 
 DATA_PATH = 'recorded_data/LennartN2'
 LETTER = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
