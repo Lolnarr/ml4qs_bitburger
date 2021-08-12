@@ -5,9 +5,9 @@ import pandas as pd
 import shutil
 from matplotlib import pyplot as plt
 
-TRAIN_PATH = '../DATA/normalized_data/training'
-TEST_PATH = '../DATA/normalized_data/test'
-VAL_PATH = '../DATA/normalized_data/validation'
+TRAIN_PATH = 'DATA/normalized_data/training'
+TEST_PATH = 'DATA/normalized_data/test'
+VAL_PATH = 'DATA/normalized_data/validation'
 
 
 def add_noise(df: pd.DataFrame):
@@ -35,10 +35,10 @@ def start_augmentation(path: str, noise=True, stretch=True):
             datafolder = 'test'
         elif os.path.basename(path) == 'validation':
             datafolder = 'validation'
-        if not os.path.exists(f'augmented_data/{datafolder}/{foldername}'):
-            os.makedirs(f'augmented_data/{datafolder}/{foldername}')
+        if not os.path.exists(f'DATA/augmented_data_train/{datafolder}/{foldername}'):
+            os.makedirs(f'DATA/augmented_data_train/{datafolder}/{foldername}')
         for filename in os.listdir(f'{path}/{foldername}'):
-            shutil.copy(f'{path}/{foldername}/{filename}', f'augmented_data/{datafolder}/{foldername}')
+            shutil.copy(f'{path}/{foldername}/{filename}', f'DATA/augmented_data_train/{datafolder}/{foldername}')
             letter = filename.split('.')[0]
             count = 1
             while count <= 5:
@@ -47,14 +47,14 @@ def start_augmentation(path: str, noise=True, stretch=True):
                     df = stretch_data(df)
                 if noise:
                     df = add_noise(df)
-                df.to_csv(f'augmented_data/{datafolder}/{foldername}/{letter}_augmented_{count}.csv', index=False)
+                df.to_csv(f'DATA/augmented_data_train/{datafolder}/{foldername}/{letter}_augmented_{count}.csv', index=False)
                 count += 1
 
 
 def main():
     start_augmentation(TRAIN_PATH)
-    start_augmentation(TEST_PATH)
-    start_augmentation(VAL_PATH)
+    #start_augmentation(TEST_PATH)
+    #start_augmentation(VAL_PATH)
 
 
 if __name__ == '__main__':

@@ -19,9 +19,9 @@ from DataGenerator import DataGenerator
 
 # DATA_PATH = 'split_data'
 DATA_PATH = 'git_data/split_data'
-TRAIN_PATH = 'DATA/augmented_data/training'
-TEST_PATH = 'DATA/augmented_data/test'
-VAL_PATH = 'DATA/augmented_data/validation'
+TRAIN_PATH = 'DATA/augmented_data_train/training'
+TEST_PATH = 'DATA/augmented_data_train/test'
+VAL_PATH = 'DATA/augmented_data_train/validation'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -63,7 +63,6 @@ def load_data(path) -> Tuple[np.ndarray, np.ndarray]:
 def build_model(input_shape: Tuple[int, int], num_classes: int) -> keras.Sequential:
     model = keras.Sequential(layers=[
         keras.layers.InputLayer(input_shape=input_shape),
-        #best so far: 200 units
         keras.layers.LSTM(units=100, return_sequences=True),
         keras.layers.LSTM(units=100, return_sequences=True),
         keras.layers.LSTM(units=100),
@@ -111,25 +110,24 @@ def plot_history(history: keras.callbacks.History):
 def main():
     SHAPE_X = 100
     SHAPE_Y = 6
-                                                                        #best so far: 64 batch_size
-    train_generator = DataGenerator(get_path_df(TRAIN_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=64)
-    val_generator = DataGenerator(get_path_df(VAL_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=64)
-    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=64)
+
+    train_generator = DataGenerator(get_path_df(TRAIN_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
+    val_generator = DataGenerator(get_path_df(VAL_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
+    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
 
     # x, y = load_data(DATA_PATH)
     # x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
     # y_train = tf.one_hot(y_train, depth=26)
     # y_test = tf.one_hot(y_test, depth=26)
     model = build_model((SHAPE_X, SHAPE_Y), 26)
-    #best so far: 100 epochs
-    history = model.fit(train_generator, epochs=100, validation_data=val_generator)
+    history = model.fit(train_generator, epochs=50, validation_data=val_generator)
     # model.fit(train_generator, epochs=10, batch_size=128, shuffle=True)
     # y_predicted = model.predict(test_generator)
     # plot_confusion_matrix(test_generator.classes, y_predicted, LETTER)
     loss, acc = model.evaluate(test_generator)
     print('test loss:', loss)
     print('test accuracy:', acc)
-    model.save(filepath='saved_models/100units_64batch_50epochs_augm/model_augm_epochs50.h5', overwrite=True)
+    model.save(filepath='saved_models/100units_32batch_50epochs_augm_train/model_augm_train_epochs50.h5', overwrite=True)
 
     n_batches = len(test_generator)
 
