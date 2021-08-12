@@ -13,11 +13,6 @@ from sklearn.metrics import confusion_matrix
 from DataGenerator import DataGenerator
 
 
-# TODO LennartB: Transfer from git to our data (wieder eine Gerade statt einer Diagonalen)
-# DONE LennartB: GPU Accel, saving the model and using it
-# https://www.tensorflow.org/guide/keras/rnn
-
-# DATA_PATH = 'split_data'
 DATA_PATH = 'git_data/split_data'
 TRAIN_PATH = 'DATA/augmented_data_train/training'
 TEST_PATH = 'DATA/augmented_data_train/test'
@@ -68,17 +63,7 @@ def build_model(input_shape: Tuple[int, int], num_classes: int) -> keras.Sequent
         keras.layers.LSTM(units=100),
         keras.layers.Dense(num_classes, activation=keras.activations.softmax)
     ])
-    """
-    model = keras.Sequential(layers=[
-        keras.layers.InputLayer(input_shape=input_shape),
-        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=True),
-        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=True),
-        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=True),
-        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=True),
-        keras.layers.SimpleRNN(units=50, activation='relu', return_sequences=False),
-        keras.layers.Dense(num_classes, activation=keras.activations.softmax)
-    ])
-    """
+
     print(model.summary())
     model.compile(optimizer=keras.optimizers.Adam(), loss=keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])
@@ -115,15 +100,8 @@ def main():
     val_generator = DataGenerator(get_path_df(VAL_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
     test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
 
-    # x, y = load_data(DATA_PATH)
-    # x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
-    # y_train = tf.one_hot(y_train, depth=26)
-    # y_test = tf.one_hot(y_test, depth=26)
     model = build_model((SHAPE_X, SHAPE_Y), 26)
     history = model.fit(train_generator, epochs=50, validation_data=val_generator)
-    # model.fit(train_generator, epochs=10, batch_size=128, shuffle=True)
-    # y_predicted = model.predict(test_generator)
-    # plot_confusion_matrix(test_generator.classes, y_predicted, LETTER)
     loss, acc = model.evaluate(test_generator)
     print('test loss:', loss)
     print('test accuracy:', acc)
