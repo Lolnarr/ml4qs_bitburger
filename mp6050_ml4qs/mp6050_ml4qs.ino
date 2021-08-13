@@ -40,7 +40,7 @@ void setup() {
     Serial.println("SD nicht initialisiert");  
   }
 
-  file = SD.open("B.csv", FILE_WRITE);
+  file = SD.open("Z.csv", FILE_WRITE);
   file.println("time,accX,accY,accZ,gyrX,gyrY,gyrZ");
 }
 void loop() {

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def main():
-    data = pd.read_csv(f'normalized_data/training/A/A_10.csv', sep=',', decimal='.')
+    data = pd.read_csv(f'DATA/normalized_data/training/H/H_1.csv', sep=',', decimal='.')
 
     fig, axs = plt.subplots(2, sharex=True, sharey=False)
     axs[0].plot(data.index, data['accX'], label='X-axis')

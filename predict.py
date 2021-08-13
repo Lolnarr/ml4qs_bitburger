@@ -7,8 +7,7 @@ import seaborn as sns
 import pandas as pd
 import os
 
-TEST_PATH = 'DATA/normalized_data/test'
-# TEST_PATH = 'git_data/normalized_data_transfer/test'
+TEST_PATH = 'DATA/normalized_data/predict_data'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -17,14 +16,14 @@ def main():
     SHAPE_X = 100
     SHAPE_Y = 6
 
-    model = keras.models.load_model('saved_models/git_model/model_git_norm_2.h5')
+    model = keras.models.load_model('saved_models/100units_32batch_50epochs_norm/model_norm_epochs50.h5')
 
     model.compile(optimizer=keras.optimizers.Adam(), loss=keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])
 
-    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=64)
+    test_generator = DataGenerator(get_path_df(TEST_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=1)
 
-    model.evaluate(test_generator, batch_size=64, verbose=1)
+    model.evaluate(test_generator, batch_size=1, verbose=1)
 
     n_batches = len(test_generator)
 
@@ -38,6 +37,7 @@ def main():
                 yticklabels=[i.upper() for i in LETTER], annot=True, fmt='g')
     plt.xlabel('Prediction')
     plt.ylabel('Label')
+    plt.savefig('prediction_confusion_matrix.png')
     plt.show()
 
 
