@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 
-DATA_PATH = 'DATA/predict_data'
+DATA_PATH = 'predict_data'
 LETTER = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
           'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
