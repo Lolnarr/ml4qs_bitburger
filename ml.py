@@ -14,9 +14,9 @@ from DataGenerator import DataGenerator
 
 
 DATA_PATH = 'git_data/split_data'
-TRAIN_PATH = 'DATA/normalized_data/training'
-TEST_PATH = 'DATA/normalized_data/test'
-VAL_PATH = 'DATA/normalized_data/validation'
+TRAIN_PATH = 'DATA/ahrs_data/training'
+TEST_PATH = 'DATA/ahrs_data/test'
+VAL_PATH = 'DATA/ahrs_data/validation'
 LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -94,7 +94,7 @@ def plot_history(history: keras.callbacks.History):
 
 def main():
     SHAPE_X = 100
-    SHAPE_Y = 6
+    SHAPE_Y = 10
 
     train_generator = DataGenerator(get_path_df(TRAIN_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
     val_generator = DataGenerator(get_path_df(VAL_PATH), shape=(SHAPE_X, SHAPE_Y), batch_size=32)
@@ -105,7 +105,7 @@ def main():
     loss, acc = model.evaluate(test_generator)
     print('test loss:', loss)
     print('test accuracy:', acc)
-    model.save(filepath='saved_models/100units_32batch_50epochs_norm/model_norm_epochs50.h5', overwrite=True)
+    model.save(filepath='saved_models/100units_32batch_50epochs_ahrs/model.h5', overwrite=True)
 
     n_batches = len(test_generator)
 
