@@ -7,14 +7,14 @@ import seaborn as sns
 import pandas as pd
 import os
 
-TEST_PATH = 'DATA/normalized_data/predict_data'
-LETTER = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+TEST_PATH = 'DATA/ahrs_data/predict_data'
+LETTER = ['a', 'b', 'c', 'd', 'e', 'f','g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 
 def main():
     SHAPE_X = 100
-    SHAPE_Y = 6
+    SHAPE_Y = 10
 
     model = keras.models.load_model('saved_models/100units_32batch_50epochs_ahrs/model.h5')
 
