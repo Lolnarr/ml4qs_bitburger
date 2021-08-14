@@ -16,7 +16,7 @@ def main():
     SHAPE_X = 100
     SHAPE_Y = 6
 
-    model = keras.models.load_model('saved_models/100units_32batch_50epochs_norm/model_norm_epochs50.h5')
+    model = keras.models.load_model('saved_models/100units_32batch_50epochs_ahrs/model.h5')
 
     model.compile(optimizer=keras.optimizers.Adam(), loss=keras.losses.categorical_crossentropy,
                   metrics=['accuracy'])
